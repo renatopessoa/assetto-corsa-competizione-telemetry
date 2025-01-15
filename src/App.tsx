@@ -130,7 +130,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img 
-                src="https://raw.githubusercontent.com/ac-custom-shaders-patch/acc-extension-config/master/storage/assetto-corsa-logo.png" 
+                src="public/tracks/logo.png" 
                 alt="Assetto Corsa Logo" 
                 className="h-12 mr-3"
               />
