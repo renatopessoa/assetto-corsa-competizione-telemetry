@@ -10,30 +10,116 @@ interface SetupRecommendationProps {
 const carModels = {
   GT3: {
     mercedes: [
-      { id: 'mercedes_amg_gt3_evo', name: 'Mercedes-AMG GT3 Evo', fuelPerLap: 3.2 },
+      { id: 'mercedes_amg_gt3_evo', name: 'Mercedes-AMG GT3 2020 Evo', fuelPerLap: 3.2 },
+      { id: 'mercedes_amg_gt3', name: 'Mercedes-AMG GT3 2015', fuelPerLap: 3.3 },
     ],
     porsche: [
-      { id: 'porsche_991ii_gt3_r', name: 'Porsche 911 GT3 R', fuelPerLap: 3.4 },
+      { id: 'porsche_992_gt3_r', name: 'Porsche 992 GT3 R 2023', fuelPerLap: 3.4 },
+      { id: 'porsche_991ii_gt3_r', name: 'Porsche 991.2 GT3 R 2019', fuelPerLap: 3.4 },
+      { id: 'porsche_991_gt3_r', name: 'Porsche 991.1 GT3 R 2018', fuelPerLap: 3.4 },
     ],
     ferrari: [
-      { id: 'ferrari_488_gt3_evo', name: 'Ferrari 488 GT3 Evo', fuelPerLap: 3.3 },
+      { id: 'ferrari_296_gt3', name: 'Ferrari 296 GT3 2023', fuelPerLap: 3.2 },
+      { id: 'ferrari_488_gt3_evo', name: 'Ferrari 488 GT3 Evo 2020', fuelPerLap: 3.3 },
+      { id: 'ferrari_488_gt3', name: 'Ferrari 488 GT3 2018', fuelPerLap: 3.3 },
     ],
     audi: [
-      { id: 'audi_r8_lms_evo_ii', name: 'Audi R8 LMS GT3 Evo II', fuelPerLap: 3.5 },
+      { id: 'audi_r8_lms_evo_ii', name: 'Audi R8 LMS GT3 Evo II 2022', fuelPerLap: 3.5 },
+      { id: 'audi_r8_lms_evo', name: 'Audi R8 LMS GT3 Evo 2019', fuelPerLap: 3.5 },
+      { id: 'audi_r8_lms', name: 'Audi R8 LMS GT3 2015', fuelPerLap: 3.5 },
     ],
     bmw: [
-      { id: 'bmw_m4_gt3', name: 'BMW M4 GT3', fuelPerLap: 3.6 },
+      { id: 'bmw_m4_gt3', name: 'BMW M4 GT3 2022', fuelPerLap: 3.6 },
+      { id: 'bmw_m6_gt3', name: 'BMW M6 GT3 2017', fuelPerLap: 3.7 },
     ],
     lamborghini: [
-      { id: 'lamborghini_huracan_gt3_evo', name: 'Lamborghini Huracán GT3 Evo', fuelPerLap: 3.4 },
+      { id: 'lamborghini_huracan_gt3_evo2', name: 'Lamborghini Huracán GT3 EVO2 2023', fuelPerLap: 3.4 },
+      { id: 'lamborghini_huracan_gt3_evo', name: 'Lamborghini Huracán GT3 EVO 2019', fuelPerLap: 3.4 },
+      { id: 'lamborghini_huracan_gt3', name: 'Lamborghini Huracán GT3 2015', fuelPerLap: 3.4 },
+    ],
+    mclaren: [
+      { id: 'mclaren_720s_gt3_evo', name: 'McLaren 720S GT3 EVO 2023', fuelPerLap: 3.3 },
+      { id: 'mclaren_720s_gt3', name: 'McLaren 720S GT3 2019', fuelPerLap: 3.3 },
+    ],
+    bentley: [
+      { id: 'bentley_continental_gt3_2018', name: 'Bentley Continental GT3 2018', fuelPerLap: 3.6 },
+      { id: 'bentley_continental_gt3_2016', name: 'Bentley Continental GT3 2016', fuelPerLap: 3.6 },
+    ],
+    honda: [
+      { id: 'honda_nsx_gt3_evo', name: 'Honda NSX GT3 Evo 2019', fuelPerLap: 3.3 },
+      { id: 'honda_nsx_gt3', name: 'Honda NSX GT3 2017', fuelPerLap: 3.3 },
+    ],
+    aston_martin: [
+      { id: 'aston_martin_vantage_v8_gt3', name: 'Aston Martin Vantage V8 GT3 2019', fuelPerLap: 3.5 },
+      { id: 'aston_martin_v12_vantage_gt3', name: 'Aston Martin V12 Vantage GT3 2016', fuelPerLap: 3.6 },
+    ],
+    lexus: [
+      { id: 'lexus_rc_f_gt3', name: 'Lexus RC F GT3 2016', fuelPerLap: 3.4 },
+    ],
+    nissan: [
+      { id: 'nissan_gt_r_nismo_gt3_2018', name: 'Nissan GT-R Nismo GT3 2018', fuelPerLap: 3.5 },
+      { id: 'nissan_gt_r_nismo_gt3_2015', name: 'Nissan GT-R Nismo GT3 2015', fuelPerLap: 3.5 },
+    ],
+    emil_frey: [
+      { id: 'emil_frey_jaguar_gt3', name: 'Emil Frey Jaguar G3 2012', fuelPerLap: 3.6 },
+    ],
+    reiter: [
+      { id: 'reiter_engineering_r_ex_gt3', name: 'Reiter Engineering R-EX GT3 2017', fuelPerLap: 3.5 },
     ],
   },
   GT4: {
     mercedes: [
-      { id: 'mercedes_amg_gt4', name: 'Mercedes-AMG GT4', fuelPerLap: 2.8 },
+      { id: 'mercedes_amg_gt4', name: 'Mercedes-AMG GT4 2016', fuelPerLap: 2.8 },
     ],
     porsche: [
-      { id: 'porsche_718_cayman_gt4_mr', name: 'Porsche 718 Cayman GT4', fuelPerLap: 2.9 },
+      { id: 'porsche_718_cayman_gt4_mr', name: 'Porsche 718 Cayman GT4 MR 2019', fuelPerLap: 2.9 },
+    ],
+    bmw: [
+      { id: 'bmw_m4_gt4', name: 'BMW M4 GT4 2018', fuelPerLap: 2.9 },
+    ],
+    audi: [
+      { id: 'audi_r8_lms_gt4', name: 'Audi R8 LMS GT4 2018', fuelPerLap: 2.8 },
+    ],
+    chevrolet: [
+      { id: 'chevrolet_camaro_gt4r', name: 'Chevrolet Camaro GT4.R 2017', fuelPerLap: 3.0 },
+    ],
+    alpine: [
+      { id: 'alpine_a110_gt4', name: 'Alpine A110 GT4 2018', fuelPerLap: 2.7 },
+    ],
+    aston_martin: [
+      { id: 'aston_martin_vantage_amr_gt4', name: 'Aston Martin Vantage AMR GT4 2018', fuelPerLap: 2.9 },
+    ],
+    maserati: [
+      { id: 'maserati_mc_gt4', name: 'Maserati MC GT4 2016', fuelPerLap: 2.9 },
+    ],
+    ginetta: [
+      { id: 'ginetta_g55_gt4', name: 'Ginetta G55 GT4 2012', fuelPerLap: 2.8 },
+    ],
+    ktm: [
+      { id: 'ktm_xbow_gt4', name: 'KTM X-Bow GT4 2016', fuelPerLap: 2.6 },
+    ],
+  },
+  CHL: {
+    ferrari: [
+      { id: 'ferrari_488_challenge_evo', name: 'Ferrari 488 Challenge Evo 2020', fuelPerLap: 3.2 },
+    ],
+    lamborghini: [
+      { id: 'lamborghini_huracan_st_evo2', name: 'Lamborghini Huracán Super Trofeo EVO2 2021', fuelPerLap: 3.3 },
+    ],
+    porsche: [
+      { id: 'porsche_992_gt3_cup', name: 'Porsche 992 GT3 Cup 2021', fuelPerLap: 3.1 },
+      { id: 'porsche_991ii_gt3_cup', name: 'Porsche 911 II GT3 Cup 2017', fuelPerLap: 3.1 },
+    ],
+    bmw: [
+      { id: 'bmw_m2_cs_racing', name: 'BMW M2 CS Racing 2020', fuelPerLap: 2.7 },
+    ],
+  },
+  TCX: {
+    bmw: [
+      { id: 'bmw_m2_cs_racing', name: 'BMW M2 CS Racing 2020', fuelPerLap: 2.7 },
+    ],
+    toyota: [
+      { id: 'toyota_gr_supra_gt4', name: 'Toyota GR Supra GT4 2020', fuelPerLap: 2.8 },
     ],
   },
 };
