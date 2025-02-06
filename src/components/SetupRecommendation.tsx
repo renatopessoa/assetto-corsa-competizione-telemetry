@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Settings, Cloud, Thermometer, Car, Droplets, Wand2 } from 'lucide-react';
 import type { CarSetup } from '../types/telemetry';
+import { calculateSetup } from '../utils/setupCalculator';
 
 interface SetupRecommendationProps {
   setup: CarSetup;
@@ -159,31 +160,15 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
   };
 
   const getRecommendedSetup = () => {
-    // Adjust setup based on conditions
-    const baseSetup = { ...setup };
+    if (!carModel) return null;
     
-    // Wet conditions adjustments
-    if (trackCondition === 'wet') {
-      baseSetup.tyrePressures = {
-        frontLeft: setup.tyrePressures.frontLeft + 1.5,
-        frontRight: setup.tyrePressures.frontRight + 1.5,
-        rearLeft: setup.tyrePressures.rearLeft + 1.5,
-        rearRight: setup.tyrePressures.rearRight + 1.5
-      };
-      baseSetup.aero.rearWing += 2;
-    }
-
-    // Temperature adjustments
-    if (trackTemp > 30) {
-      baseSetup.tyrePressures = {
-        frontLeft: setup.tyrePressures.frontLeft - 0.5,
-        frontRight: setup.tyrePressures.frontRight - 0.5,
-        rearLeft: setup.tyrePressures.rearLeft - 0.5,
-        rearRight: setup.tyrePressures.rearRight - 0.5
-      };
-    }
-
-    return baseSetup;
+    return calculateSetup(
+      carModel,
+      trackTemp,
+      airTemp,
+      humidity,
+      trackCondition
+    );
   };
 
   const fuelRequired = calculateFuelRequired();
@@ -387,72 +372,107 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
       </div>
 
       {/* Recommended Setup Display */}
-      {showSetup && (
+      {showSetup && recommendedSetup && (
         <div className="mt-8 space-y-6 animate-fade-in">
           <h4 className="text-lg font-medium text-white border-b border-gray-700 pb-2">
             Recommended Setup for Current Conditions
           </h4>
           
+          {/* Tyres Section */}
           <div>
             <h5 className="text-sm font-medium text-gray-400 mb-2">Tyre Pressures (PSI)</h5>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">FL:</span>
-                <span className="text-white ml-2">{recommendedSetup.tyrePressures.frontLeft.toFixed(1)}</span>
+                <span className="text-white ml-2">{recommendedSetup.tyres.tyrePressures.frontLeft.toFixed(1)}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">FR:</span>
-                <span className="text-white ml-2">{recommendedSetup.tyrePressures.frontRight.toFixed(1)}</span>
+                <span className="text-white ml-2">{recommendedSetup.tyres.tyrePressures.frontRight.toFixed(1)}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">RL:</span>
-                <span className="text-white ml-2">{recommendedSetup.tyrePressures.rearLeft.toFixed(1)}</span>
+                <span className="text-white ml-2">{recommendedSetup.tyres.tyrePressures.rearLeft.toFixed(1)}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">RR:</span>
-                <span className="text-white ml-2">{recommendedSetup.tyrePressures.rearRight.toFixed(1)}</span>
+                <span className="text-white ml-2">{recommendedSetup.tyres.tyrePressures.rearRight.toFixed(1)}</span>
               </div>
             </div>
           </div>
 
+          {/* Aero Balance Section */}
           <div>
-            <h5 className="text-sm font-medium text-gray-400 mb-2">Suspension</h5>
+            <h5 className="text-sm font-medium text-gray-400 mb-2">Ride Height (mm)</h5>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Front Height:</span>
-                <span className="text-white ml-2">{recommendedSetup.suspension.frontHeight}mm</span>
+                <span className="text-gray-400">Front:</span>
+                <span className="text-white ml-2">{recommendedSetup.aeroBalance.rideHeight.front}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Rear Height:</span>
-                <span className="text-white ml-2">{recommendedSetup.suspension.rearHeight}mm</span>
+                <span className="text-gray-400">Rear:</span>
+                <span className="text-white ml-2">{recommendedSetup.aeroBalance.rideHeight.rear}</span>
               </div>
             </div>
           </div>
 
+          {/* Electronics Section */}
+          <div>
+            <h5 className="text-sm font-medium text-gray-400 mb-2">Electronics</h5>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">TC1:</span>
+                <span className="text-white ml-2">{recommendedSetup.electronics.tc1}</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">TC2:</span>
+                <span className="text-white ml-2">{recommendedSetup.electronics.tc2}</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">ABS:</span>
+                <span className="text-white ml-2">{recommendedSetup.electronics.abs}</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">ECU Map:</span>
+                <span className="text-white ml-2">{recommendedSetup.electronics.ecuMap}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Mechanical Balance Section */}
+          <div>
+            <h5 className="text-sm font-medium text-gray-400 mb-2">Mechanical Balance</h5>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">ARB Front:</span>
+                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.aRBFront}</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">ARB Rear:</span>
+                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.aRBRear}</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">Brake Torque:</span>
+                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.brakeTorque}%</span>
+              </div>
+              <div className="bg-gray-700 p-2 rounded">
+                <span className="text-gray-400">Brake Bias:</span>
+                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.brakeBias}%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Aero Section */}
           <div>
             <h5 className="text-sm font-medium text-gray-400 mb-2">Aerodynamics</h5>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">Front Splitter:</span>
-                <span className="text-white ml-2">{recommendedSetup.aero.frontSplitter}</span>
+                <span className="text-white ml-2">{recommendedSetup.aeroBalance.splitter}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">Rear Wing:</span>
-                <span className="text-white ml-2">{recommendedSetup.aero.rearWing}</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h5 className="text-sm font-medium text-gray-400 mb-2">Brakes</h5>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Power:</span>
-                <span className="text-white ml-2">{recommendedSetup.brake.brakePower}%</span>
-              </div>
-              <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Bias:</span>
-                <span className="text-white ml-2">{recommendedSetup.brake.brakeBias}%</span>
+                <span className="text-white ml-2">{recommendedSetup.aeroBalance.rearWing}</span>
               </div>
             </div>
           </div>
