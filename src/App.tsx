@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as Tooltip from '@radix-ui/react-tooltip';
 import { TelemetryChart } from './components/TelemetryChart';
 import { CircuitInfo } from './components/CircuitInfo';
 import { SetupRecommendation } from './components/SetupRecommendation';
@@ -124,78 +125,80 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <header className="bg-gray-800 shadow-lg border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <img 
-                src="public/tracks/logo.png" 
-                alt="Assetto Corsa Logo" 
-                className="h-12 mr-3"
-              />
-              <h1 className="text-2xl font-bold text-white">Telemetry Analysis</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <select
-                value={selectedCircuit}
-                onChange={handleCircuitChange}
-                className="bg-gray-700 text-white rounded-md px-3 py-2 border border-gray-600 focus:border-indigo-500 focus:ring focus:ring-indigo-500/20"
-              >
-                {Object.entries(circuits).map(([id, circuit]) => (
-                  <option key={id} value={id}>{circuit.name}</option>
-                ))}
-              </select>
-              <div className="flex items-center space-x-2">
-                <div className={`w-3 h-3 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`} />
-                <span className="text-sm text-gray-300">
-                  {connected ? 'Connected' : 'Disconnected'}
-                </span>
+    <Tooltip.Provider>
+      <div className="min-h-screen bg-gray-900">
+        <header className="bg-gray-800 shadow-lg border-b border-gray-700">
+          <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <img 
+                  src="public/tracks/logo.png" 
+                  alt="Assetto Corsa Logo" 
+                  className="h-12 mr-3"
+                />
+                <h1 className="text-2xl font-bold text-white">Telemetry Analysis</h1>
               </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-8">
-            <CircuitInfo circuit={circuits[selectedCircuit]} />
-            <TrackMap trackName={circuits[selectedCircuit].name} />
-            <TelemetryChart lapData={lapData} />
-          </div>
-          
-          <div className="space-y-8">
-            <SetupRecommendation setup={setupRecommendation} />
-            
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-lg font-semibold text-white mb-4">Connection Settings</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">UDP Port</label>
-                  <input
-                    type="number"
-                    value={port}
-                    onChange={handlePortChange}
-                    className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
-                </div>
-                <button
-                  onClick={handleConnect}
-                  className={`w-full px-4 py-2 rounded-md text-white font-medium ${
-                    connected
-                      ? 'bg-red-600 hover:bg-red-700'
-                      : 'bg-indigo-600 hover:bg-indigo-700'
-                  }`}
+              <div className="flex items-center space-x-4">
+                <select
+                  value={selectedCircuit}
+                  onChange={handleCircuitChange}
+                  className="bg-gray-700 text-white rounded-md px-3 py-2 border border-gray-600 focus:border-indigo-500 focus:ring focus:ring-indigo-500/20"
                 >
-                  {connected ? 'Disconnect' : 'Connect to ACC'}
-                </button>
+                  {Object.entries(circuits).map(([id, circuit]) => (
+                    <option key={id} value={id}>{circuit.name}</option>
+                  ))}
+                </select>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-3 h-3 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`} />
+                  <span className="text-sm text-gray-300">
+                    {connected ? 'Connected' : 'Disconnected'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </header>
+
+        <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-8">
+              <CircuitInfo circuit={circuits[selectedCircuit]} />
+              <TrackMap trackName={circuits[selectedCircuit].name} />
+              <TelemetryChart lapData={lapData} />
+            </div>
+            
+            <div className="space-y-8">
+              <SetupRecommendation setup={setupRecommendation} />
+              
+              <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 className="text-lg font-semibold text-white mb-4">Connection Settings</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">UDP Port</label>
+                    <input
+                      type="number"
+                      value={port}
+                      onChange={handlePortChange}
+                      className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                  </div>
+                  <button
+                    onClick={handleConnect}
+                    className={`w-full px-4 py-2 rounded-md text-white font-medium ${
+                      connected
+                        ? 'bg-red-600 hover:bg-red-700'
+                        : 'bg-indigo-600 hover:bg-indigo-700'
+                    }`}
+                  >
+                    {connected ? 'Disconnect' : 'Connect to ACC'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </Tooltip.Provider>
   );
 }
 

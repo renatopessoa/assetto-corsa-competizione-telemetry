@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Settings, Cloud, Thermometer, Car, Droplets, Wand2 } from 'lucide-react';
+import { SetupTooltip } from './SetupTooltip';
 import type { CarSetup } from '../types/telemetry';
 import { calculateSetup } from '../utils/setupCalculator';
 
@@ -380,7 +381,9 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
           
           {/* Tyres Section */}
           <div>
-            <h5 className="text-sm font-medium text-gray-400 mb-2">Tyre Pressures (PSI)</h5>
+            <SetupTooltip parameter="tyrePressures">
+              <h5 className="text-sm font-medium text-gray-400 mb-2">Tyre Pressures (PSI)</h5>
+            </SetupTooltip>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="bg-gray-700 p-2 rounded">
                 <span className="text-gray-400">FL:</span>
@@ -421,15 +424,21 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
             <h5 className="text-sm font-medium text-gray-400 mb-2">Electronics</h5>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">TC1:</span>
+                <SetupTooltip parameter="tc1">
+                  <span className="text-gray-400">TC1:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.electronics.tc1}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">TC2:</span>
+                <SetupTooltip parameter="tc2">
+                  <span className="text-gray-400">TC2:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.electronics.tc2}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">ABS:</span>
+                <SetupTooltip parameter="abs">
+                  <span className="text-gray-400">ABS:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.electronics.abs}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
@@ -444,19 +453,15 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
             <h5 className="text-sm font-medium text-gray-400 mb-2">Mechanical Balance</h5>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">ARB Front:</span>
+                <SetupTooltip parameter="aRB">
+                  <span className="text-gray-400">ARB Front:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.aRBFront}</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">ARB Rear:</span>
-                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.aRBRear}</span>
-              </div>
-              <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Brake Torque:</span>
-                <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.brakeTorque}%</span>
-              </div>
-              <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Brake Bias:</span>
+                <SetupTooltip parameter="brakeBias">
+                  <span className="text-gray-400">Brake Bias:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.mechanicalBalance.brakeBias}%</span>
               </div>
             </div>
@@ -467,11 +472,15 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
             <h5 className="text-sm font-medium text-gray-400 mb-2">Aerodynamics</h5>
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Front Splitter:</span>
-                <span className="text-white ml-2">{recommendedSetup.aeroBalance.splitter}</span>
+                <SetupTooltip parameter="rideHeight">
+                  <span className="text-gray-400">Ride Height:</span>
+                </SetupTooltip>
+                <span className="text-white ml-2">{recommendedSetup.aeroBalance.rideHeight.front}mm F / {recommendedSetup.aeroBalance.rideHeight.rear}mm R</span>
               </div>
               <div className="bg-gray-700 p-2 rounded">
-                <span className="text-gray-400">Rear Wing:</span>
+                <SetupTooltip parameter="rearWing">
+                  <span className="text-gray-400">Rear Wing:</span>
+                </SetupTooltip>
                 <span className="text-white ml-2">{recommendedSetup.aeroBalance.rearWing}</span>
               </div>
             </div>
