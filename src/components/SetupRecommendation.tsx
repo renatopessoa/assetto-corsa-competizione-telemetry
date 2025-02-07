@@ -161,15 +161,20 @@ export function SetupRecommendation({ setup }: SetupRecommendationProps) {
   };
 
   const getRecommendedSetup = () => {
-    if (!carModel) return null;
+    if (!carModel || !carCategory) return null;
     
-    return calculateSetup(
+    const calculatedSetup = calculateSetup(
       carModel,
       trackTemp,
       airTemp,
       humidity,
       trackCondition
     );
+
+    // Se não encontrou um setup calculado, usa o setup base
+    if (!calculatedSetup) return setup;
+
+    return calculatedSetup;
   };
 
   const fuelRequired = calculateFuelRequired();
